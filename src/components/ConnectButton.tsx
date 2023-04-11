@@ -43,9 +43,20 @@ export default function ConnectButton() {
   const [gasLimit, setGasLimit] = useState<number>(0);
   const toast = useToast();
 
+  useEffect(() => {
+    const connectState = localStorage.getItem("connectState");
+    const flagConnect = connectState === "true"
+    if (flagConnect) {
+      setConnected(flagConnect);
+      activate(injected);
+    }
+
+  });
+
   function handleConnectWallet() {
     connected ? deactivate() : activate(injected);
     setConnected(!connected);
+    localStorage.setItem("connectState", !connected?"true":"false");
   }
 
   function handleMode() {
